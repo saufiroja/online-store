@@ -12,11 +12,8 @@ func main() {
 	e := echo.New()
 	conf := config.Config{}
 
-	e.Use(middleware.Logger())
-	e.Use(middleware.Recover())
-
 	e.Use(middleware.LoggerWithConfig(middleware.LoggerConfig{
-		Format: `[${time_rfc3339}] ${status} ${method} ${host}${path} ${latency_human}` + "\n",
+		Format: "method=${method}, uri=${uri}, status=${status}\n",
 	}))
 
 	routers.AuthRoutes(e, conf)
