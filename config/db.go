@@ -11,11 +11,12 @@ import (
 )
 
 type Config struct {
-	DB_HOST string
-	DB_PORT string
-	DB_USER string
-	DB_PASS string
-	DB_NAME string
+	DB_HOST    string
+	DB_PORT    string
+	DB_USER    string
+	DB_PASS    string
+	DB_NAME    string
+	JWT_SECRET string
 }
 
 func IntiDB(conf Config) *gorm.DB {
