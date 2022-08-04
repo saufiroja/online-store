@@ -4,6 +4,9 @@ import (
 	"project/online-store/config"
 	"project/online-store/entity"
 	"project/online-store/repository/auth"
+	"project/online-store/utils"
+
+	"golang.org/x/crypto/bcrypt"
 )
 
 type Service struct {
@@ -18,11 +21,29 @@ func NewAuthService(r auth.AuthRepository, conf config.Config) AuthService {
 	}
 }
 
-func (s *Service) Register(user entity.User) error {
-	err := s.r.Register(user)
-	if err != nil {
-		return err
+func (s *Service) Register(user entity.User) (entity.User, error) {
+	// hash password
+	hash, _ := bcrypt.GenerateFromPassword([]byte(user.Password), 12)
+	user.Password = string(hash)
+	// return user
+	return s.r.Register(user)
+}
+
+func (s *Service) Login(email, password string) (string, error) {
+	// get user
+	user, er := s.r.Login(email)
+	if er != nil {
+		return "", er
 	}
 
-	return nil
+	// compare password
+	err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password))
+	if err != nil {
+		return "", err
+	}
+
+	// generate token
+	token, _ := utils.GenerateAccessToken(user.Email, s.conf.JWT_SECRET, user.Role)
+
+	return token, nil
 }

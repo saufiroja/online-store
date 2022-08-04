@@ -16,11 +16,21 @@ func NewAuthRepository(db *gorm.DB) AuthRepository {
 	}
 }
 
-func (r *repository) Register(user entity.User) error {
+func (r *repository) Register(user entity.User) (entity.User, error) {
 	err := r.db.Create(&user).Error
 	if err != nil {
-		return err
+		return user, err
 	}
 
-	return nil
+	return user, nil
+}
+
+func (r *repository) Login(email string) (entity.User, error) {
+	user := entity.User{}
+	err := r.db.Where("email = ?", email).First(&user).Error
+	if err != nil {
+		return user, err
+	}
+
+	return user, nil
 }

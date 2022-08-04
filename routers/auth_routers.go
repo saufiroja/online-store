@@ -21,4 +21,5 @@ func AuthRoutes(e *echo.Echo, conf config.Config) {
 	g := e.Group("/api")
 
 	g.POST("/register", controll.Register)
+	g.POST("/login", controll.Login)
 }
