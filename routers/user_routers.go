@@ -21,4 +21,5 @@ func UserRoutes(echo *echo.Echo, conf config.Config) {
 	g := echo.Group("/api")
 
 	g.GET("/users", controll.FindAllUsers)
+	g.GET("/users/:id", controll.FindUserById)
 }

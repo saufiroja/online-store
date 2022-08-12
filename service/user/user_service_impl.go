@@ -25,3 +25,11 @@ func (s *Service) FindAllUsers() ([]entity.User, error) {
 	}
 	return user, nil
 }
+
+func (s *Service) FindUserById(id string) (entity.User, error) {
+	user, err := s.r.FindUserById(id)
+	if err != nil {
+		return user, err
+	}
+	return user, nil
+}

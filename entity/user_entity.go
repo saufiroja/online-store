@@ -6,20 +6,13 @@ import (
 	"gorm.io/gorm"
 )
 
-// create role
-type Role string
-
-const (
-	RoleAdmin Role = "admin"
-	RoleUser  Role = "user"
-)
-
 type User struct {
 	Id         string `json:"id" gorm:"primary_key;not null"`
 	Name       string `json:"name" gorm:"not null" validate:"required"`
 	Email      string `json:"email" gorm:"not null;unique" validate:"required,email"`
 	Password   string `json:"password" gorm:"not null" validate:"required,min=8,max=100"`
-	Role       Role   `json:"role" gorm:"not null;default:'user'"`
+	RoleId     string `json:"role_id" gorm:"not null"`
+	Role       Role   `json:"role" gorm:"foreignkey:RoleId"`
 	Otp        string `json:"otp" gorm:"not null"`
 	OtpExpired int64  `json:"otp_expiry" gorm:"not null"`
 
