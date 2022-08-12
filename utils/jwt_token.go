@@ -1,19 +1,18 @@
 package utils
 
 import (
-	"project/online-store/entity"
 	"time"
 
 	"github.com/golang-jwt/jwt"
 )
 
 type JwtTokenClaims struct {
-	Email string      `json:"email"`
-	Role  entity.Role `json:"role"`
+	Email string `json:"email"`
+	Role  string `json:"role"`
 	jwt.StandardClaims
 }
 
-func GenerateAccessToken(email, secret string, role entity.Role) (string, error) {
+func GenerateAccessToken(email, secret, role string) (string, error) {
 	claims := jwt.MapClaims{}
 	claims["email"] = email
 	claims["role"] = role
