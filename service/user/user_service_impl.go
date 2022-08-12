@@ -33,3 +33,16 @@ func (s *Service) FindUserById(id string) (entity.User, error) {
 	}
 	return user, nil
 }
+
+func (s *Service) UpdateUserById(id string, user entity.User) error {
+	_, err := s.r.FindUserById(id)
+	if err != nil {
+		return err
+	}
+
+	er := s.r.UpdateUserById(id, user)
+	if er != nil {
+		return er
+	}
+	return nil
+}

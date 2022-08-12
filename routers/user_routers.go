@@ -22,4 +22,6 @@ func UserRoutes(echo *echo.Echo, conf config.Config) {
 
 	g.GET("/users", controll.FindAllUsers)
 	g.GET("/users/:id", controll.FindUserById)
+
+	g.PUT("/users/:id", controll.UpdateUserById)
 }

@@ -76,3 +76,40 @@ func (c *Controller) FindUserById(ctx echo.Context) error {
 		"data":    users,
 	})
 }
+
+// @Summary Update user by id
+// @Description Update user by id
+// @Router /api/users/{id} [put]
+// @Param id path string true "User id"
+// @Param user body entity.User true "User object"
+// @Success 201 {object} map[string]any
+// @Failure 404 {object} map[string]any
+// @Failure 500 {object} map[string]any
+func (c *Controller) UpdateUserById(ctx echo.Context) error {
+	// entity user
+	user := entity.User{}
+	// param id
+	id := ctx.Param("id")
+	// request body or bind user
+	err := ctx.Bind(&user)
+	// check if request body is empty throw error
+	if err != nil {
+		return ctx.JSON(http.StatusBadRequest, map[string]any{
+			"error":   err.Error(),
+			"message": "Invalid request body",
+		})
+	}
+	// call service method to update user
+	er := c.S.UpdateUserById(id, user)
+	// if error throw error
+	if er != nil {
+		return ctx.JSON(http.StatusInternalServerError, map[string]any{
+			"error":   er.Error(),
+			"message": "Internal server error",
+		})
+	}
+	// return response
+	return ctx.JSON(http.StatusCreated, map[string]any{
+		"message": "Successfully updated user",
+	})
+}

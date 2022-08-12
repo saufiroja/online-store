@@ -11,7 +11,9 @@ type repository struct {
 }
 
 func NewUserRepository(db *gorm.DB) UserRepository {
-	return &repository{db: db}
+	return &repository{
+		db: db,
+	}
 }
 
 func (r *repository) FindAllUsers() ([]entity.User, error) {
@@ -30,4 +32,12 @@ func (r *repository) FindUserById(id string) (entity.User, error) {
 		return user, err
 	}
 	return user, nil
+}
+
+func (r *repository) UpdateUserById(id string, user entity.User) error {
+	err := r.db.Model(&user).Where("id = ?", id).Updates(&user).Error
+	if err != nil {
+		return err
+	}
+	return nil
 }
