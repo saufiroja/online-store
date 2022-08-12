@@ -46,3 +46,16 @@ func (s *Service) UpdateUserById(id string, user entity.User) error {
 	}
 	return nil
 }
+
+func (s *Service) DeleteUserById(id string, user entity.User) error {
+	_, err := s.r.FindUserById(id)
+	if err != nil {
+		return err
+	}
+
+	er := s.r.DeleteUserById(id, user)
+	if er != nil {
+		return er
+	}
+	return nil
+}

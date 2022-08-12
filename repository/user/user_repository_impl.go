@@ -41,3 +41,11 @@ func (r *repository) UpdateUserById(id string, user entity.User) error {
 	}
 	return nil
 }
+
+func (r *repository) DeleteUserById(id string, user entity.User) error {
+	err := r.db.Where("id = ?", id).Delete(&user).Error
+	if err != nil {
+		return err
+	}
+	return nil
+}

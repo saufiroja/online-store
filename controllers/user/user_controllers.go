@@ -113,3 +113,29 @@ func (c *Controller) UpdateUserById(ctx echo.Context) error {
 		"message": "Successfully updated user",
 	})
 }
+
+// @Summary Delete user by id
+// @Description Delete user by id
+// @Router /api/users/{id} [delete]
+// @Param id path string true "User id"
+// @Success 200 {object} map[string]any
+// @Failure 404 {object} map[string]any
+// @Failure 500 {object} map[string]any
+func (c *Controller) DeleteUserById(ctx echo.Context) error {
+	user := entity.User{}
+	// param id
+	id := ctx.Param("id")
+	// call service method to delete user
+	err := c.S.DeleteUserById(id, user)
+	// if error throw error
+	if err != nil {
+		return ctx.JSON(http.StatusInternalServerError, map[string]any{
+			"error":   err.Error(),
+			"message": "Internal server error",
+		})
+	}
+	// return response
+	return ctx.JSON(http.StatusOK, map[string]any{
+		"message": "Successfully deleted user",
+	})
+}
