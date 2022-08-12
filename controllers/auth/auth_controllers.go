@@ -19,6 +19,7 @@ func (c *Controller) Register(ctx echo.Context) error {
 		Name:     ctx.FormValue("name"),
 		Email:    ctx.FormValue("email"),
 		Password: ctx.FormValue("password"),
+		RoleId:   ctx.FormValue("role"),
 	}
 
 	err := ctx.Bind(&user)

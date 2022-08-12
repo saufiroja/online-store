@@ -43,7 +43,7 @@ func (s *Service) Login(email, password string) (string, error) {
 	}
 
 	// generate token
-	token, _ := utils.GenerateAccessToken(user.Email, s.conf.JWT_SECRET, user.Role)
+	token, _ := utils.GenerateAccessToken(user.Email, s.conf.JWT_SECRET, user.RoleId)
 
 	return token, nil
 }
