@@ -37,7 +37,7 @@ func IntiDB(conf Config) *gorm.DB {
 
 	db, err := gorm.Open(postgres.Open(dns), &gorm.Config{})
 
-	db.AutoMigrate(&entity.User{}, &entity.Role{})
+	db.AutoMigrate(&entity.User{}, &entity.Role{}, &entity.Product{})
 
 	if err != nil {
 		log.Fatal(err)

@@ -7,14 +7,15 @@ import (
 )
 
 type User struct {
-	Id         string `json:"id" gorm:"primary_key;not null"`
-	Name       string `json:"name" gorm:"not null" validate:"required"`
-	Email      string `json:"email" gorm:"not null;unique" validate:"required,email"`
-	Password   string `json:"password" gorm:"not null" validate:"required,min=8,max=100"`
-	RoleId     string `json:"role_id" gorm:"not null"`
-	Role       Role   `json:"role" gorm:"foreignkey:RoleId"`
-	Otp        string `json:"otp" gorm:"not null"`
-	OtpExpired int64  `json:"otp_expiry" gorm:"not null"`
+	Id         string    `json:"id" gorm:"primary_key;not null"`
+	Name       string    `json:"name" gorm:"not null" validate:"required"`
+	Email      string    `json:"email" gorm:"not null;unique" validate:"required,email"`
+	Password   string    `json:"password" gorm:"not null" validate:"required,min=8,max=100"`
+	RoleId     string    `json:"role_id" gorm:"not null"`
+	Role       Role      `json:"role" gorm:"foreignkey:RoleId"`
+	Product    []Product `json:"product" gorm:"foreignkey:UserId"`
+	Otp        string    `json:"otp" gorm:"not null"`
+	OtpExpired int64     `json:"otp_expiry" gorm:"not null"`
 
 	CreatedAt time.Time      `json:"created_at"`
 	UpdatedAt time.Time      `json:"updated_at"`
