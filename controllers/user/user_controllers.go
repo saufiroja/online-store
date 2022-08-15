@@ -48,19 +48,8 @@ func (c *Controller) FindAllUsers(ctx echo.Context) error {
 // @Failure 404 {object} map[string]any
 // @Failure 500 {object} map[string]any
 func (c *Controller) FindUserById(ctx echo.Context) error {
-	// entity user
-	user := entity.User{}
 	// param id
 	id := ctx.Param("id")
-	// request body or bind user
-	// check if request body is empty throw error
-	err := ctx.Bind(&user)
-	if err != nil {
-		return ctx.JSON(http.StatusBadRequest, map[string]any{
-			"error":   err.Error(),
-			"message": "Invalid request body",
-		})
-	}
 	// call service method to create user
 	users, er := c.S.FindUserById(id)
 	// if error throw error
