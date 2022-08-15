@@ -7,13 +7,15 @@ import (
 )
 
 type JwtTokenClaims struct {
+	ID    string `json:"id"`
 	Email string `json:"email"`
 	Role  string `json:"role"`
 	jwt.StandardClaims
 }
 
-func GenerateAccessToken(email, secret, role string) (string, error) {
+func GenerateAccessToken(id, email, secret, role string) (string, error) {
 	claims := jwt.MapClaims{}
+	claims["id"] = id
 	claims["email"] = email
 	claims["role"] = role
 	claims["exp"] = time.Now().Add(time.Hour * 1).Unix()
