@@ -15,11 +15,8 @@ type Controller struct {
 
 func (c *Controller) Register(ctx echo.Context) error {
 	user := entity.User{
-		Id:       uuid.New().String(),
-		Name:     ctx.FormValue("name"),
-		Email:    ctx.FormValue("email"),
-		Password: ctx.FormValue("password"),
-		RoleId:   ctx.FormValue("role"),
+		Id:     uuid.New().String(),
+		RoleId: 1,
 	}
 
 	err := ctx.Bind(&user)
