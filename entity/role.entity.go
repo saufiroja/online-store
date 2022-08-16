@@ -7,7 +7,7 @@ import (
 )
 
 type Role struct {
-	Id   string `json:"id" gorm:"primary_key;not null"`
+	Id   int    `json:"id" gorm:"primary_key;not null;auto_increment"`
 	Name string `json:"name" gorm:"not null" validate:"required"`
 
 	CreatedAt time.Time      `json:"created_at"`
