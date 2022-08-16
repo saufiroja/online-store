@@ -18,7 +18,8 @@ func NewProductRepository(db *gorm.DB) ProductRepository {
 
 func (r *repository) FindAllProducts() ([]entity.Product, error) {
 	product := []entity.Product{}
-	err := r.db.Find(&product).Error
+
+	err := r.db.Model(&entity.Product{}).Find(&product).Error
 	if err != nil {
 		return product, err
 	}
