@@ -13,7 +13,7 @@ type JwtTokenClaims struct {
 	jwt.StandardClaims
 }
 
-func GenerateAccessToken(id, email, secret, role string) (string, error) {
+func GenerateAccessToken(id, email, secret string, role int) (string, error) {
 	claims := jwt.MapClaims{}
 	claims["id"] = id
 	claims["email"] = email
