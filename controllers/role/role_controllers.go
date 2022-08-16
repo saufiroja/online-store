@@ -5,7 +5,6 @@ import (
 	"project/online-store/entity"
 	"project/online-store/service/role"
 
-	"github.com/google/uuid"
 	"github.com/labstack/echo/v4"
 )
 
@@ -15,9 +14,7 @@ type Controller struct {
 
 func (c *Controller) CreateRole(ctx echo.Context) error {
 	// entity role
-	role := entity.Role{
-		Id: uuid.New().String(),
-	}
+	role := entity.Role{}
 	// request body or bind role
 	err := ctx.Bind(&role)
 	// check if request body is empty throw error
