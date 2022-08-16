@@ -53,11 +53,16 @@ func (c *Controller) CreateProduct(ctx echo.Context) error {
 	token := user.(*jwt.Token)
 
 	claims := token.Claims.(jwt.MapClaims)
-	userID := claims["id"].(string)
+	roleID := claims["role"].(float64)
+
+	if roleID == 1 {
+		return ctx.JSON(http.StatusUnauthorized, map[string]any{
+			"message": "You are not authorized to create products",
+		})
+	}
 
 	product := entity.Product{
-		Id:     uuid.New().String(),
-		UserId: userID,
+		Id: uuid.New().String(),
 	}
 
 	err := ctx.Bind(&product)
