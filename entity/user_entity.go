@@ -13,9 +13,9 @@ type User struct {
 	Password   string `json:"password" gorm:"not null" validate:"required,min=8,max=100"`
 	Otp        string `json:"otp" gorm:"not null"`
 	OtpExpired int64  `json:"otp_expiry" gorm:"not null"`
-	RoleId     int    `json:"role_id" gorm:"not null"`
-	// ignore this field when marshalling to json
-	Role Role `json:"-" gorm:"-"`
+	RoleId     int    `json:"role_id" gorm:"not null;default:1"`
+
+	Role Role `json:"-" gorm:"foreignkey:RoleId"`
 
 	CreatedAt time.Time      `json:"created_at"`
 	UpdatedAt time.Time      `json:"updated_at"`

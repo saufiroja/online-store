@@ -7,9 +7,10 @@ import (
 	s "project/online-store/service/auth"
 
 	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
 )
 
-func AuthRoutes(e *echo.Echo, conf config.Config) {
+func AuthRoutes(echo *echo.Echo, conf config.Config) {
 	db := config.IntiDB(conf)
 
 	repo := r.NewAuthRepository(db)
@@ -18,8 +19,15 @@ func AuthRoutes(e *echo.Echo, conf config.Config) {
 		S: service,
 	}
 
-	g := e.Group("/api")
+	e := echo.Group("/api")
+	g := echo.Group("/api")
+	g.Use(middleware.JWTWithConfig(middleware.JWTConfig{
+		SigningKey:    []byte(conf.JWT_SECRET),
+		SigningMethod: "HS256",
+	}))
 
-	g.POST("/register", controll.Register)
-	g.POST("/login", controll.Login)
+	e.POST("/register", controll.Register)
+	e.POST("/login", controll.Login)
+
+	g.GET("/store/activate", controll.ActivatedStore)
 }

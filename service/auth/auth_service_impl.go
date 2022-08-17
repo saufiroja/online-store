@@ -47,3 +47,8 @@ func (s *Service) Login(email, password string) (string, error) {
 
 	return token, nil
 }
+
+func (s *Service) ActivatedStore(id string, role int) error {
+	// update role user to admin
+	return s.r.ActivatedStore(id, role)
+}
