@@ -20,6 +20,7 @@ func main() {
 	routers.UserRoutes(e, conf)
 	routers.RoleRoutes(e, conf)
 	routers.ProductRoutes(e, conf)
+	routers.CategoryRoutes(e, conf)
 
 	err := e.Start("127.0.0.1:8080")
 	if err != nil {
