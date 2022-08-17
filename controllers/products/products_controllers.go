@@ -54,6 +54,7 @@ func (c *Controller) CreateProduct(ctx echo.Context) error {
 
 	claims := token.Claims.(jwt.MapClaims)
 	roleID := claims["role"].(float64)
+	UserID := claims["id"].(string)
 
 	if roleID == 1 {
 		return ctx.JSON(http.StatusUnauthorized, map[string]any{
@@ -62,7 +63,8 @@ func (c *Controller) CreateProduct(ctx echo.Context) error {
 	}
 
 	product := entity.Product{
-		Id: uuid.New().String(),
+		Id:     uuid.New().String(),
+		UserId: UserID,
 	}
 
 	err := ctx.Bind(&product)

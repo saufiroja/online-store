@@ -14,6 +14,7 @@ type Product struct {
 	Price       int    `json:"price" gorm:"type:int;not null"`
 	Image       string `json:"image" gorm:"type:varchar(255);not null"`
 	UserId      string `json:"user_id" gorm:"type:varchar(255);not null"`
+	CategoryId  string `json:"category_id" gorm:"type:varchar(255);not null"`
 
 	User User `json:"-" gorm:"foreignkey:UserId"`
 
